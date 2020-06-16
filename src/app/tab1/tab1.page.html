@@ -1,9 +1,21 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Ionic QRScanner</ion-title>
+  <ion-toolbar color=""> <!--Dark-->
+    <ion-title>Leitor</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-button expand="block" (click)="lerQRCode()">Ler QRCode</ion-button>
+<ion-content [fullscreen]="true" color="medium">
+
 </ion-content>
+
+<div class="screen">
+  <div class="scan">
+    <img id="logo" src="assets/logo.png" alt="">
+  </div>
+</div>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar color=""> <!--Dark-->
+    <ion-button expand="block" (click)="lerQRCode()">Ler QRCode</ion-button>
+  </ion-toolbar>
+</ion-footer>

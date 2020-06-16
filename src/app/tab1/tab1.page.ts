@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -9,7 +10,20 @@ import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 })  
 export class Tab1Page {
   qrScan: any;
-  constructor(private qrScanner: QRScanner,private dialogs: Dialogs){ }
+  public corpoPagina: HTMLElement;
+  public img: HTMLElement;
+  public scanner: any;
+
+  constructor(private qrScanner: QRScanner,private dialogs: Dialogs, public platform: Platform){ 
+    this.platform.backButton.subscribeWithPriority(0, ()=>{
+
+      this.corpoPagina.style.opacity = "1  ";
+      this.img.style.opacity = "1";
+
+      this.qrScanner.hide(); //Desativa a câmera
+      this.scanner.unsubscribe(); //Para o scanner
+    });
+  }
 
   public lerQRCode(){
     // Optionally request the permission early
@@ -20,19 +34,23 @@ export class Tab1Page {
 
         this.qrScanner.show();
 
-        const corpo = document.getElementsByTagName('body')[0] as HTMLElement;
-        corpo.style.opacity = "0";
+        this.corpoPagina = document.getElementsByTagName('ion-content')[0] as HTMLElement;
+        this.corpoPagina.style.opacity = "0";
+
+        this.img = document.getElementById('logo') as HTMLElement;
+        this.img.style.opacity = "0";
 
         // start scanning
-        let scanSub = this.qrScanner.scan().subscribe((text: string) => {
+        this.scanner = this.qrScanner.scan().subscribe((text: string) => {
           console.log('Scanned something', text);
 
           this.dialogs.alert('Resultado: ' + text);
 
-          corpo.style.opacity = "1  ";
+          this.corpoPagina.style.opacity = "1  ";
+          this.img.style.opacity = "1";
 
           this.qrScanner.hide(); // hide camera preview
-          scanSub.unsubscribe(); // stop scanning
+          this.scanner.unsubscribe(); // stop scanning
         });
 
       } else if (status.denied) {
