@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { QRScanner } from '@ionic-native/qr-scanner/ngx';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,8 +21,10 @@ import { QRScanner } from '@ionic-native/qr-scanner/ngx';
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     QRScanner,
-    Dialogs
+    Dialogs,
+    ScreenOrientation
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+
 })
 export class AppModule {}

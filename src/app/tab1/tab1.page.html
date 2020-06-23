@@ -15,6 +15,19 @@
 </div>
 
 <ion-footer class="ion-no-border">
+  <ion-iten *ngIf="link">
+    <ion-label>
+      <div>
+        <a [href]="resultado" target="_blank">{{resultado}}</a>
+      </div>
+    </ion-label>
+  </ion-iten>
+  <ion-item *ngIf="resultado">
+    <ion-label position="floating">Resultado:</ion-label>
+    <ion-input [(ngModel)]="resultado"></ion-input>
+  </ion-item>
+
+<ion-footer class="ion-no-border">
   <ion-toolbar color=""> <!--Dark-->
     <ion-button expand="block" (click)="lerQRCode()">Ler QRCode</ion-button>
   </ion-toolbar>
