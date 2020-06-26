@@ -41,15 +41,6 @@ export class Tab1Page {
     this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
   }
 
-  /*
-  public async historico(){
-    if (this.texto != "") {
-
-      let texto;
-    }
-  } 
-  */
-
   public lerQRCode(){
     // Optionally request the permission early
     this.qrScanner.prepare()

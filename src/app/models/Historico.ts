@@ -1,3 +1,4 @@
 export class Historico {
-    texto: string;
+    leitura: string;
+    dataHora: string;
 }
