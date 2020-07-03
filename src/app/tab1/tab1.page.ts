@@ -28,7 +28,7 @@ export class Tab1Page {
 
     this.platform.backButton.subscribeWithPriority(0, ()=>{
 
-      this.corpoPagina.style.opacity = "1  ";
+      this.corpoPagina.style.opacity = "1";
       this.img.style.opacity = "1";
 
       this.resultado = null;
