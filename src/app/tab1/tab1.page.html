@@ -14,20 +14,19 @@
   </div>
 </div>
 
-<ion-footer class="ion-no-border">
-  <ion-iten *ngIf="link">
+<ion-footer class="ion-no-border" id="footer">
+
+  <ion-item *ngIf="link">
     <ion-label>
-      <div>
-        <a [href]="resultado" target="_blank">{{resultado}}</a>
-      </div>
+      <a [href]="resultado" target="_blank">{{resultado}}</a>
     </ion-label>
-  </ion-iten>
+  </ion-item>
+
   <ion-item *ngIf="resultado">
-    <ion-label position="floating">Resultado:</ion-label>
+    <ion-label position="stacked">Stacked Label</ion-label>
     <ion-input [(ngModel)]="resultado"></ion-input>
   </ion-item>
 
-<ion-footer class="ion-no-border">
   <ion-toolbar color=""> <!--Dark-->
     <ion-button expand="block" (click)="lerQRCode()">Escanear</ion-button>
   </ion-toolbar>

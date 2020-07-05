@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 import { Platform } from '@ionic/angular';
@@ -19,26 +19,29 @@ export class Tab1Page {
   public resultado: string;
   public link = false
   public texto: string;
+  public footer: HTMLElement;
 
   constructor(private qrScanner: QRScanner,
               private dialogs: Dialogs, 
               public platform: Platform, 
               private screenOrientation: ScreenOrientation,
-              public historicoSercice: HistoricoService){ 
+              public historicoSercice: HistoricoService,
+              private cdRef: ChangeDetectorRef){ 
+
+    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
 
     this.platform.backButton.subscribeWithPriority(0, ()=>{
 
       this.corpoPagina.style.opacity = "1";
       this.img.style.opacity = "1";
+      this.footer.style.opacity = "1";
 
       this.resultado = null;
       this.link = false;
 
-      this.qrScanner.hide(); //Desativa a câmera
+      this.qrScanner.hide();      //Desativa a câmera
       this.scanner.unsubscribe(); //Para o scanner
     });
-
-    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
   }
 
   public lerQRCode(){
@@ -47,21 +50,30 @@ export class Tab1Page {
     .then((status: QRScannerStatus) => {
       if (status.authorized) {
         // camera permission was granted
-        this.qrScanner.show();
+
         this.corpoPagina = document.getElementsByTagName('ion-content')[0] as HTMLElement;
-        this.corpoPagina.style.opacity = "0";
         this.img = document.getElementById("logo") as HTMLElement;
+        this.footer = document.getElementById("footer") as HTMLElement;
+        
+        this.corpoPagina.style.opacity = "0";
         this.img.style.opacity = "0";
+        this.footer.style.opacity = "0";
+
+        this.qrScanner.show();
         // start scanning
         this.scanner = this.qrScanner.scan().subscribe((text: string) => {
-          //console.log('Scanned something', text);
-          //this.dialogs.alert('Resultado: ' + text);
-          this.verificaLink(text['result']);
-          this.resultado = (text['result']);
+
+          this.resultado = (text['result']) ? text['result'] : text;
+
           this.corpoPagina.style.opacity = "1  ";
           this.img.style.opacity = "1";
+          this.footer.style.opacity = "1";
+
           this.qrScanner.hide(); // hide camera preview
           this.scanner.unsubscribe(); // stop scanning
+
+          this.verificaLink(this.resultado);
+          this.cdRef.detectChanges();
         });
 
       } else if (status.denied) {
