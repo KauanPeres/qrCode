@@ -12,7 +12,7 @@ import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { QRScanner } from '@ionic-native/qr-scanner/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { IonicStorageModule } from '@ionic/storage';
-import { HistoricoService } from './services/historico.service';
+import { HistoricoService } from './servicos/historico.service';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
